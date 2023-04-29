@@ -57,7 +57,19 @@ fs.readFile("./countries.txt", "utf8", (err, data) => {
 
   shortedCountries.pop();
 
-  console.table(shortedCountries);
+  const csvString = [
+    ["country", "area", "population", "density"],
+    ...shortedCountries.map((item) => [
+      item.country,
+      item.area,
+      item.population,
+      item.populationDensity,
+    ]),
+  ]
+    .map((e) => e.join(","))
+    .join("\n");
+
+  console.log(csvString);
 
   if (!countries) return;
 });
