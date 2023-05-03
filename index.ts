@@ -7,8 +7,6 @@ interface countryObjet {
 const fs = require("fs");
 const regex = /\s(?=\d)/;
 
-const regexNumbers = /\d+/g;
-
 fs.readFile("./countries.txt", "utf8", (err, data) => {
   if (err) throw err;
   if (!data) return;
@@ -58,7 +56,7 @@ fs.readFile("./countries.txt", "utf8", (err, data) => {
   shortedCountries.pop();
 
   const csvString = [
-    ["country", "area", "population", "density"],
+    ["Country", "Area", "Population", "Density"],
     ...shortedCountries.map((item) => [
       item.country,
       item.area,
@@ -68,6 +66,10 @@ fs.readFile("./countries.txt", "utf8", (err, data) => {
   ]
     .map((e) => e.join(","))
     .join("\n");
+
+  fs.writeFile("./countries.csv", csvString, (err) => {
+    if (err) throw err;
+  });
 
   console.log(csvString);
 
